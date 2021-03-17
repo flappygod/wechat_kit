@@ -8,7 +8,7 @@ part of 'wechat_subscribe_msg_resp.dart';
 
 WechatSubscribeMsgResp _$WechatSubscribeMsgRespFromJson(Map json) {
   return WechatSubscribeMsgResp(
-    errorCode: json['errorCode']? as int ,
+    errorCode: json['errorCode']as int ,
     errorMsg: json['errorMsg'] as String,
     templateId: json['templateId'] as String,
     scene: json['scene'] as int,

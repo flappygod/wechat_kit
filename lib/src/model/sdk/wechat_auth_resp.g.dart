@@ -8,7 +8,7 @@ part of 'wechat_auth_resp.dart';
 
 WechatAuthResp _$WechatAuthRespFromJson(Map json) {
   return WechatAuthResp(
-    errorCode: json['errorCode']? as int ,
+    errorCode: json['errorCode']as int ,
     errorMsg: json['errorMsg'] as String,
     code: json['code'] as String,
     state: json['state'] as String,
