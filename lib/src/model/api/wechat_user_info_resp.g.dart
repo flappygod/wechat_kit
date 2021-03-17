@@ -8,7 +8,7 @@ part of 'wechat_user_info_resp.dart';
 
 WechatUserInfoResp _$WechatUserInfoRespFromJson(Map json) {
   return WechatUserInfoResp(
-    errcode: json['errcode'] as int ?? 0,
+    errcode: json['errcode'] as int ,
     errmsg: json['errmsg'] as String,
     openid: json['openid'] as String,
     nickname: json['nickname'] as String,

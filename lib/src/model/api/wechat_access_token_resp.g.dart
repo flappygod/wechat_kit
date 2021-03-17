@@ -8,7 +8,7 @@ part of 'wechat_access_token_resp.dart';
 
 WechatAccessTokenResp _$WechatAccessTokenRespFromJson(Map json) {
   return WechatAccessTokenResp(
-    errcode: json['errcode'] as int ?? 0,
+    errcode: json['errcode'] as int ,
     errmsg: json['errmsg'] as String,
     openid: json['openid'] as String,
     scope: json['scope'] as String,

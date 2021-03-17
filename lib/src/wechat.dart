@@ -107,44 +107,44 @@ class Wechat {
   static const String _SCHEME_FILE = 'file';
 
   final MethodChannel _channel =
-      const MethodChannel('v7lin.github.io/wechat_kit');
+  const MethodChannel('v7lin.github.io/wechat_kit');
 
   final StreamController<WechatAuthResp> _authRespStreamController =
-      StreamController<WechatAuthResp>.broadcast();
+  StreamController<WechatAuthResp>.broadcast();
 
   final StreamController<WechatSdkResp> _openUrlRespStreamController =
-      StreamController<WechatSdkResp>.broadcast();
+  StreamController<WechatSdkResp>.broadcast();
 
   final StreamController<WechatSdkResp> _shareMsgRespStreamController =
-      StreamController<WechatSdkResp>.broadcast();
+  StreamController<WechatSdkResp>.broadcast();
 
   final StreamController<WechatSubscribeMsgResp>
-      _subscribeMsgRespStreamController =
-      StreamController<WechatSubscribeMsgResp>.broadcast();
+  _subscribeMsgRespStreamController =
+  StreamController<WechatSubscribeMsgResp>.broadcast();
 
   final StreamController<WechatLaunchMiniProgramResp>
-      _launchMiniProgramRespStreamController =
-      StreamController<WechatLaunchMiniProgramResp>.broadcast();
+  _launchMiniProgramRespStreamController =
+  StreamController<WechatLaunchMiniProgramResp>.broadcast();
 
   final StreamController<WechatPayResp> _payRespStreamController =
-      StreamController<WechatPayResp>.broadcast();
+  StreamController<WechatPayResp>.broadcast();
 
   final StreamController<Uint8List?> _authGotQrcodeRespStreamController =
-      StreamController<Uint8List?>.broadcast();
+  StreamController<Uint8List?>.broadcast();
 
   final StreamController<String> _authQrcodeScannedRespStreamController =
-      StreamController<String>.broadcast();
+  StreamController<String>.broadcast();
 
   final StreamController<WechatQrauthResp> _authFinishRespStreamController =
-      StreamController<WechatQrauthResp>.broadcast();
+  StreamController<WechatQrauthResp>.broadcast();
 
   /// 向微信注册应用
   Future<void> registerApp({
     required String appId,
     required String universalLink,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(!Platform.isIOS || (universalLink?.isNotEmpty ?? false));
+    assert(appId.isNotEmpty);
+    assert(!Platform.isIOS || (universalLink.isNotEmpty));
     return _channel.invokeMethod<void>(
       _METHOD_REGISTERAPP,
       <String, dynamic>{
@@ -262,7 +262,7 @@ class Wechat {
     required List<String> scope,
     String? state,
   }) {
-    assert(scope?.isNotEmpty ?? false);
+    assert(scope.isNotEmpty);
     return _channel.invokeMethod<void>(_METHOD_AUTH, <String, dynamic>{
       _ARGUMENT_KEY_SCOPE: scope.join(','), // Scope
       if (state != null) _ARGUMENT_KEY_STATE: state,
@@ -275,12 +275,12 @@ class Wechat {
     required String appSecret,
     required String code,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(appSecret?.isNotEmpty ?? false);
-    assert(code?.isNotEmpty ?? false);
+    assert(appId.isNotEmpty);
+    assert(appSecret.isNotEmpty);
+    assert(code.isNotEmpty);
     return HttpClient()
         .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appId&secret=$appSecret&code=$code&grant_type=authorization_code'))
+        'https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appId&secret=$appSecret&code=$code&grant_type=authorization_code'))
         .then((HttpClientRequest request) {
       return request.close();
     }).then((HttpClientResponse response) async {
@@ -299,11 +299,11 @@ class Wechat {
     required String appId,
     required String refreshToken,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(refreshToken?.isNotEmpty ?? false);
+    assert(appId.isNotEmpty);
+    assert(refreshToken.isNotEmpty);
     return HttpClient()
         .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=$appId&grant_type=refresh_token&refresh_token=$refreshToken'))
+        'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=$appId&grant_type=refresh_token&refresh_token=$refreshToken'))
         .then((HttpClientRequest request) {
       return request.close();
     }).then((HttpClientResponse response) async {
@@ -322,11 +322,11 @@ class Wechat {
     required String openId,
     required String accessToken,
   }) {
-    assert(openId?.isNotEmpty ?? false);
-    assert(accessToken?.isNotEmpty ?? false);
+    assert(openId.isNotEmpty);
+    assert(accessToken.isNotEmpty);
     return HttpClient()
         .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/sns/userinfo?access_token=$accessToken&openid=$openId'))
+        'https://api.weixin.qq.com/sns/userinfo?access_token=$accessToken&openid=$openId'))
         .then((HttpClientRequest request) {
       return request.close();
     }).then((HttpClientResponse response) async {
@@ -347,11 +347,11 @@ class Wechat {
     required String appId,
     required String appSecret,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(appSecret?.isNotEmpty ?? false);
+    assert(appId.isNotEmpty);
+    assert(appSecret.isNotEmpty);
     return HttpClient()
         .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appId&secret=$appSecret'))
+        'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appId&secret=$appSecret'))
         .then((HttpClientRequest request) {
       return request.close();
     }).then((HttpClientResponse response) async {
@@ -369,10 +369,10 @@ class Wechat {
   Future<WechatTicketResp> getTicket({
     required String accessToken,
   }) {
-    assert(accessToken?.isNotEmpty ?? false);
+    assert(accessToken.isNotEmpty);
     return HttpClient()
         .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=$accessToken&type=2'))
+        'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=$accessToken&type=2'))
         .then((HttpClientRequest request) {
       return request.close();
     }).then((HttpClientResponse response) async {
@@ -392,9 +392,9 @@ class Wechat {
     required List<String> scope,
     required String ticket,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(scope?.isNotEmpty ?? false);
-    assert(ticket?.isNotEmpty ?? false);
+    assert(appId.isNotEmpty);
+    assert(scope.isNotEmpty);
+    assert(ticket.isNotEmpty);
     String noncestr = Uuid().v1().toString().replaceAll('-', '');
     String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
     final String content =
@@ -421,7 +421,7 @@ class Wechat {
   Future<void> openUrl({
     required String url,
   }) {
-    assert((url?.isNotEmpty ?? false) && url.length <= 10 * 1024);
+    assert((url.isNotEmpty) && url.length <= 10 * 1024);
     return _channel.invokeMethod<void>(
       _METHOD_OPENURL,
       <String, dynamic>{
@@ -440,7 +440,7 @@ class Wechat {
     required int scene,
     required String text,
   }) {
-    assert((text?.isNotEmpty ?? false) && text.length <= 10 * 1024);
+    assert((text.isNotEmpty) && text.length <= 10 * 1024);
     return _channel.invokeMethod<void>(
       _METHOD_SHARETEXT,
       <String, dynamic>{
@@ -558,8 +558,8 @@ class Wechat {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert((musicUrl != null &&
-            musicUrl.isNotEmpty &&
-            musicUrl.length <= 10 * 1024) ||
+        musicUrl.isNotEmpty &&
+        musicUrl.length <= 10 * 1024) ||
         (musicLowBandUrl != null &&
             musicLowBandUrl.isNotEmpty &&
             musicLowBandUrl.length <= 10 * 1024));
@@ -593,8 +593,8 @@ class Wechat {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert((videoUrl != null &&
-            videoUrl.isNotEmpty &&
-            videoUrl.length <= 10 * 1024) ||
+        videoUrl.isNotEmpty &&
+        videoUrl.length <= 10 * 1024) ||
         (videoLowBandUrl != null &&
             videoLowBandUrl.isNotEmpty &&
             videoLowBandUrl.length <= 10 * 1024));
@@ -679,7 +679,7 @@ class Wechat {
     required String templateId,
     String? reserved,
   }) {
-    assert((templateId?.isNotEmpty ?? false) && templateId.length <= 1024);
+    assert((templateId.isNotEmpty) && templateId.length <= 1024);
     assert(reserved == null || reserved.length <= 1024);
     return _channel.invokeMethod<void>(
       _METHOD_SUBSCRIBEMSG,
@@ -697,7 +697,7 @@ class Wechat {
     String? path,
     int type = WechatMiniProgram.release,
   }) {
-    assert(userName?.isNotEmpty ?? false);
+    assert(userName.isNotEmpty);
     return _channel.invokeMethod<void>(
       _METHOD_LAUNCHMINIPROGRAM,
       <String, dynamic>{
@@ -719,13 +719,13 @@ class Wechat {
     required String timeStamp,
     required String sign,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(partnerId?.isNotEmpty ?? false);
-    assert(prepayId?.isNotEmpty ?? false);
-    assert(package?.isNotEmpty ?? false);
-    assert(nonceStr?.isNotEmpty ?? false);
-    assert(timeStamp?.isNotEmpty ?? false);
-    assert(sign?.isNotEmpty ?? false);
+    assert(appId.isNotEmpty);
+    assert(partnerId.isNotEmpty);
+    assert(prepayId.isNotEmpty);
+    assert(package.isNotEmpty);
+    assert(nonceStr.isNotEmpty);
+    assert(timeStamp.isNotEmpty);
+    assert(sign.isNotEmpty);
     return _channel.invokeMethod<void>(
       _METHOD_PAY,
       <String, dynamic>{

@@ -8,7 +8,7 @@ part of 'wechat_pay_resp.dart';
 
 WechatPayResp _$WechatPayRespFromJson(Map json) {
   return WechatPayResp(
-    errorCode: json['errorCode'] as int ?? 0,
+    errorCode: json['errorCode']? as int,
     errorMsg: json['errorMsg'] as String,
     returnKey: json['returnKey'] as String,
   );

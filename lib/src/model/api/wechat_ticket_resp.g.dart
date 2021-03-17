@@ -8,7 +8,7 @@ part of 'wechat_ticket_resp.dart';
 
 WechatTicketResp _$WechatTicketRespFromJson(Map json) {
   return WechatTicketResp(
-    errcode: json['errcode'] as int ?? 0,
+    errcode: json['errcode'] as int ,
     errmsg: json['errmsg'] as String,
     ticket: json['ticket'] as String,
     expiresIn: json['expires_in'] as int,
