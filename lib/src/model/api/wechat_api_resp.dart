@@ -17,8 +17,8 @@ abstract class WechatApiResp {
   @JsonKey(
     defaultValue: ERRORCODE_SUCCESS,
   )
-  final int errcode;
-  final String errmsg;
+  final int? errcode;
+  final String? errmsg;
 
   bool isSuccessful() => errcode == ERRORCODE_SUCCESS;
 }

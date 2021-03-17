@@ -37,10 +37,10 @@ class WechatSdkResp {
   @JsonKey(
     defaultValue: ERRORCODE_SUCCESS,
   )
-  final int errorCode;
+  final int? errorCode;
 
   /// 错误提示字符串
-  final String errorMsg;
+  final String? errorMsg;
 
   bool isSuccessful() => errorCode == ERRORCODE_SUCCESS;
 

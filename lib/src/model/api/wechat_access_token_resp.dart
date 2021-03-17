@@ -10,8 +10,8 @@ part 'wechat_access_token_resp.g.dart';
 )
 class WechatAccessTokenResp extends WechatApiResp {
   WechatAccessTokenResp({
-    int errcode,
-    String errmsg,
+    int? errcode,
+    String? errmsg,
     this.openid,
     this.scope,
     this.accessToken,
@@ -22,13 +22,13 @@ class WechatAccessTokenResp extends WechatApiResp {
   factory WechatAccessTokenResp.fromJson(Map<dynamic, dynamic> json) =>
       _$WechatAccessTokenRespFromJson(json);
 
-  final String openid;
-  final String scope;
-  final String accessToken;
-  final String refreshToken;
+  final String? openid;
+  final String? scope;
+  final String? accessToken;
+  final String? refreshToken;
 
   /// 单位：秒
-  final int expiresIn;
+  final int? expiresIn;
 
   Map<dynamic, dynamic> toJson() => _$WechatAccessTokenRespToJson(this);
 }

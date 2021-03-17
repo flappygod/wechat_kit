@@ -36,8 +36,8 @@ class WechatQrauthResp {
   @JsonKey(
     defaultValue: ERRORCODE_OK,
   )
-  final int errorCode;
-  final String authCode;
+  final int? errorCode;
+  final String? authCode;
 
   bool isSuccessful() => errorCode == ERRORCODE_OK;
 

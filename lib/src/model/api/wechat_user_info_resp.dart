@@ -10,8 +10,8 @@ part 'wechat_user_info_resp.g.dart';
 )
 class WechatUserInfoResp extends WechatApiResp {
   WechatUserInfoResp({
-    int errcode,
-    String errmsg,
+    int? errcode,
+    String? errmsg,
     this.openid,
     this.nickname,
     this.sex,
@@ -26,17 +26,17 @@ class WechatUserInfoResp extends WechatApiResp {
   factory WechatUserInfoResp.fromJson(Map<dynamic, dynamic> json) =>
       _$WechatUserInfoRespFromJson(json);
 
-  final String openid;
-  final String nickname;
+  final String? openid;
+  final String? nickname;
 
   /// 1为男性，2为女性
-  final int sex;
-  final String province;
-  final String city;
-  final String country;
-  final String headimgurl;
-  final List<dynamic> privilege;
-  final String unionid;
+  final int? sex;
+  final String? province;
+  final String? city;
+  final String? country;
+  final String? headimgurl;
+  final List<dynamic>? privilege;
+  final String? unionid;
 
   bool isMale() {
     return sex == 1;

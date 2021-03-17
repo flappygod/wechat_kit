@@ -9,15 +9,15 @@ part 'wechat_pay_resp.g.dart';
 )
 class WechatPayResp extends WechatSdkResp {
   WechatPayResp({
-    int errorCode,
-    String errorMsg,
+    int? errorCode,
+    String? errorMsg,
     this.returnKey,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
   factory WechatPayResp.fromJson(Map<dynamic, dynamic> json) =>
       _$WechatPayRespFromJson(json);
 
-  final String returnKey;
+  final String? returnKey;
 
   @override
   Map<dynamic, dynamic> toJson() => _$WechatPayRespToJson(this);

@@ -30,7 +30,7 @@ void main() {
                 'onAuthResp',
                 json.decode(
                     '{"country":"CN","code":null,"errorCode":-2,"state":null,"lang":"zh_CN","errorMsg":null}'))),
-            (ByteData data) {
+            (ByteData? data) {
               print('mock ${channel.name} ${call.method}');
             },
           ));
@@ -52,7 +52,7 @@ void main() {
             channel.name,
             channel.codec.encodeMethodCall(MethodCall('onShareMsgResp',
                 json.decode('{"errorCode":0,"errorMsg":null}'))),
-            (ByteData data) {
+            (ByteData? data) {
               print('mock ${channel.name} ${call.method}');
             },
           ));
@@ -67,7 +67,7 @@ void main() {
                 'onPayResp',
                 json.decode(
                     '{"errorCode":-2,"returnKey":"","errorMsg":null}'))),
-            (ByteData data) {
+            (ByteData? data) {
               // mock success
             },
           ));

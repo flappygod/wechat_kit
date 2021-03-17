@@ -129,8 +129,8 @@ class Wechat {
   final StreamController<WechatPayResp> _payRespStreamController =
       StreamController<WechatPayResp>.broadcast();
 
-  final StreamController<Uint8List> _authGotQrcodeRespStreamController =
-      StreamController<Uint8List>.broadcast();
+  final StreamController<Uint8List?> _authGotQrcodeRespStreamController =
+      StreamController<Uint8List?>.broadcast();
 
   final StreamController<String> _authQrcodeScannedRespStreamController =
       StreamController<String>.broadcast();
@@ -140,8 +140,8 @@ class Wechat {
 
   /// 向微信注册应用
   Future<void> registerApp({
-    @required String appId,
-    @required String universalLink,
+    required String appId,
+    required String universalLink,
   }) {
     assert(appId?.isNotEmpty ?? false);
     assert(!Platform.isIOS || (universalLink?.isNotEmpty ?? false));
@@ -183,7 +183,7 @@ class Wechat {
         break;
       case _METHOD_ONAUTHGOTQRCODE:
         _authGotQrcodeRespStreamController
-            .add(call.arguments[_ARGUMENT_KEY_RESULT_IMAGEDATA] as Uint8List);
+            .add(call.arguments[_ARGUMENT_KEY_RESULT_IMAGEDATA] as Uint8List?);
         break;
       case _METHOD_ONAUTHQRCODESCANNED:
         _authQrcodeScannedRespStreamController.add('QrcodeScanned');
@@ -226,7 +226,7 @@ class Wechat {
   }
 
   /// 扫码登录 - 获取二维码
-  Stream<Uint8List> authGotQrcodeResp() {
+  Stream<Uint8List?> authGotQrcodeResp() {
     return _authGotQrcodeRespStreamController.stream;
   }
 
@@ -241,17 +241,17 @@ class Wechat {
   }
 
   /// 检测微信是否已安装
-  Future<bool> isInstalled() {
+  Future<bool?> isInstalled() {
     return _channel.invokeMethod<bool>(_METHOD_ISINSTALLED);
   }
 
   /// 判断当前微信的版本是否支持OpenApi
-  Future<bool> isSupportApi() {
+  Future<bool?> isSupportApi() {
     return _channel.invokeMethod<bool>(_METHOD_ISSUPPORTAPI);
   }
 
   /// 打开微信
-  Future<bool> openWechat() {
+  Future<bool?> openWechat() {
     return _channel.invokeMethod<bool>(_METHOD_OPENWECHAT);
   }
 
@@ -259,8 +259,8 @@ class Wechat {
 
   /// 授权登录
   Future<void> auth({
-    @required List<String> scope,
-    String state,
+    required List<String> scope,
+    String? state,
   }) {
     assert(scope?.isNotEmpty ?? false);
     return _channel.invokeMethod<void>(_METHOD_AUTH, <String, dynamic>{
@@ -271,9 +271,9 @@ class Wechat {
 
   /// 获取 access_token（UnionID）
   Future<WechatAccessTokenResp> getAccessTokenUnionID({
-    @required String appId,
-    @required String appSecret,
-    @required String code,
+    required String appId,
+    required String appSecret,
+    required String code,
   }) {
     assert(appId?.isNotEmpty ?? false);
     assert(appSecret?.isNotEmpty ?? false);
@@ -296,8 +296,8 @@ class Wechat {
 
   /// 刷新或续期 access_token 使用（UnionID）
   Future<WechatAccessTokenResp> refreshAccessTokenUnionID({
-    @required String appId,
-    @required String refreshToken,
+    required String appId,
+    required String refreshToken,
   }) {
     assert(appId?.isNotEmpty ?? false);
     assert(refreshToken?.isNotEmpty ?? false);
@@ -319,8 +319,8 @@ class Wechat {
 
   /// 获取用户个人信息（UnionID）
   Future<WechatUserInfoResp> getUserInfoUnionID({
-    @required String openId,
-    @required String accessToken,
+    required String openId,
+    required String accessToken,
   }) {
     assert(openId?.isNotEmpty ?? false);
     assert(accessToken?.isNotEmpty ?? false);
@@ -344,8 +344,8 @@ class Wechat {
 
   /// 获取 access_token
   Future<WechatAccessTokenResp> getAccessToken({
-    @required String appId,
-    @required String appSecret,
+    required String appId,
+    required String appSecret,
   }) {
     assert(appId?.isNotEmpty ?? false);
     assert(appSecret?.isNotEmpty ?? false);
@@ -367,7 +367,7 @@ class Wechat {
 
   /// 用上面的函数拿到的 access_token，获取 sdk_ticket
   Future<WechatTicketResp> getTicket({
-    @required String accessToken,
+    required String accessToken,
   }) {
     assert(accessToken?.isNotEmpty ?? false);
     return HttpClient()
@@ -388,9 +388,9 @@ class Wechat {
 
   /// 用上面函数拿到的 ticket，开始扫码登录
   Future<void> startQrauth({
-    @required String appId,
-    @required List<String> scope,
-    @required String ticket,
+    required String appId,
+    required List<String> scope,
+    required String ticket,
   }) {
     assert(appId?.isNotEmpty ?? false);
     assert(scope?.isNotEmpty ?? false);
@@ -419,7 +419,7 @@ class Wechat {
 
   /// 打开指定网页
   Future<void> openUrl({
-    @required String url,
+    required String url,
   }) {
     assert((url?.isNotEmpty ?? false) && url.length <= 10 * 1024);
     return _channel.invokeMethod<void>(
@@ -437,8 +437,8 @@ class Wechat {
 
   /// 分享 - 文本
   Future<void> shareText({
-    @required int scene,
-    @required String text,
+    required int scene,
+    required String text,
   }) {
     assert((text?.isNotEmpty ?? false) && text.length <= 10 * 1024);
     return _channel.invokeMethod<void>(
@@ -452,12 +452,12 @@ class Wechat {
 
   /// 分享 - 图片
   Future<void> shareImage({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    Uint8List imageData,
-    Uri imageUri,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    Uint8List? imageData,
+    Uri? imageUri,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
@@ -482,13 +482,13 @@ class Wechat {
 
   /// 分享 - 文件
   Future<void> shareFile({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    Uint8List fileData,
-    Uri fileUri,
-    String fileExtension,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    Uint8List? fileData,
+    Uri? fileUri,
+    String? fileExtension,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
@@ -515,12 +515,12 @@ class Wechat {
 
   /// 分享 - Emoji/GIF
   Future<void> shareEmoji({
-    @required int scene,
-    String title,
-    String description,
-    @required Uint8List thumbData,
-    Uint8List emojiData,
-    Uri emojiUri,
+    required int scene,
+    String? title,
+    String? description,
+    required Uint8List thumbData,
+    Uint8List? emojiData,
+    Uri? emojiUri,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
@@ -545,14 +545,14 @@ class Wechat {
 
   /// 分享 - 音乐
   Future<void> shareMediaMusic({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    String musicUrl,
-    String musicDataUrl,
-    String musicLowBandUrl,
-    String musicLowBandDataUrl,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    String? musicUrl,
+    String? musicDataUrl,
+    String? musicLowBandUrl,
+    String? musicLowBandDataUrl,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
@@ -582,12 +582,12 @@ class Wechat {
 
   /// 分享 - 视频
   Future<void> shareVideo({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    String videoUrl,
-    String videoLowBandUrl,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    String? videoUrl,
+    String? videoLowBandUrl,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
@@ -614,11 +614,11 @@ class Wechat {
 
   /// 分享 - 网页
   Future<void> shareWebpage({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    @required String webpageUrl,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    required String webpageUrl,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
@@ -640,14 +640,14 @@ class Wechat {
 
   /// 分享 - 小程序 - 目前只支持分享到会话
   Future<void> shareMiniProgram({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    @required String webpageUrl,
-    @required String userName,
-    String path,
-    Uint8List hdImageData,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    required String webpageUrl,
+    required String userName,
+    String? path,
+    Uint8List? hdImageData,
     bool withShareTicket = false,
   }) {
     assert(scene == WechatScene.SESSION);
@@ -675,9 +675,9 @@ class Wechat {
 
   /// 一次性订阅消息
   Future<void> subscribeMsg({
-    @required int scene,
-    @required String templateId,
-    String reserved,
+    required int scene,
+    required String templateId,
+    String? reserved,
   }) {
     assert((templateId?.isNotEmpty ?? false) && templateId.length <= 1024);
     assert(reserved == null || reserved.length <= 1024);
@@ -693,8 +693,8 @@ class Wechat {
 
   /// 打开小程序
   Future<void> launchMiniProgram({
-    @required String userName,
-    String path,
+    required String userName,
+    String? path,
     int type = WechatMiniProgram.release,
   }) {
     assert(userName?.isNotEmpty ?? false);
@@ -711,13 +711,13 @@ class Wechat {
   /// 支付
   /// 参数说明：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
   Future<void> pay({
-    @required String appId,
-    @required String partnerId,
-    @required String prepayId,
-    @required String package,
-    @required String nonceStr,
-    @required String timeStamp,
-    @required String sign,
+    required String appId,
+    required String partnerId,
+    required String prepayId,
+    required String package,
+    required String nonceStr,
+    required String timeStamp,
+    required String sign,
   }) {
     assert(appId?.isNotEmpty ?? false);
     assert(partnerId?.isNotEmpty ?? false);
