@@ -8,9 +8,9 @@ part of 'wechat_launch_mini_program_resp.dart';
 
 WechatLaunchMiniProgramResp _$WechatLaunchMiniProgramRespFromJson(Map json) {
   return WechatLaunchMiniProgramResp(
-    errorCode: json['errorCode']as int ,
-    errorMsg: json['errorMsg'] as String,
-    extMsg: json['extMsg'] as String,
+    errorCode: json['errorCode'] as int? ?? 0,
+    errorMsg: json['errorMsg'] as String?,
+    extMsg: json['extMsg'] as String?,
   );
 }
 

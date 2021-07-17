@@ -15,7 +15,7 @@ dependencies:
   convert: '>=2.0.2 <=3.0.0'
   crypto: '>=2.0.6 <=3.0.1'
   uuid: '>=1.0.0 <=3.0.1'
-  json_annotation: '>=2.0.0 <=4.0.0'
+  json_annotation: '>=4.0.0 <=4.1.0'
 
 dev_dependencies:
   flutter_test:
