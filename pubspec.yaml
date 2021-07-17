@@ -12,9 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  convert: '>=2.0.2 <=3.0.0'
-  crypto: '>=2.0.6 <=3.0.1'
-  uuid: '>=1.0.0 <=3.0.1'
+  convert: '>=3.0.0 <=3.0.1'
+  crypto: '>=3.0.0 <=3.0.1'
+  uuid: '>=3.0.0 <=3.0.4'
   json_annotation: '>=4.0.0 <=4.1.0'
 
 dev_dependencies:
