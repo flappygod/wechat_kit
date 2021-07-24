@@ -7,6 +7,7 @@ import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:universal_platform/universal_platform.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wechat_kit/src/model/api/wechat_access_token_resp.dart';
 import 'package:wechat_kit/src/model/api/wechat_ticket_resp.dart';
@@ -144,7 +145,7 @@ class Wechat {
     required String universalLink,
   }) {
     assert(appId.isNotEmpty);
-    assert(!Platform.isIOS || (universalLink.isNotEmpty));
+    assert(!UniversalPlatform.isIOS || (universalLink.isNotEmpty));
     return _channel.invokeMethod<void>(
       _METHOD_REGISTERAPP,
       <String, dynamic>{
@@ -498,7 +499,7 @@ class Wechat {
             fileUri.isScheme(_SCHEME_FILE) &&
             fileUri.toFilePath().length <= 10 * 1024 &&
             File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024));
-    assert(Platform.isAndroid || (fileExtension?.isNotEmpty ?? false));
+    assert(UniversalPlatform.isAndroid || (fileExtension?.isNotEmpty ?? false));
     return _channel.invokeMethod<void>(
       _METHOD_SHAREFILE,
       <String, dynamic>{
