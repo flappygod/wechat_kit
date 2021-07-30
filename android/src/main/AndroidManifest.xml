@@ -5,5 +5,17 @@
         <package android:name="com.tencent.mm" />
     </queries>
 
+    <application>
+        <provider
+            android:name=".content.WechatKitFileProvider"
+            android:authorities="${applicationId}.content.WechatKitFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/wechat_kit_file_paths" />
+        </provider>
+    </application>
 
 </manifest>

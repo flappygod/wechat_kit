@@ -7,6 +7,7 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 
 import com.tencent.mm.opensdk.constants.Build;
 import com.tencent.mm.opensdk.diffdev.DiffDevOAuthFactory;
@@ -36,6 +37,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -409,6 +411,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.imageData = call.argument(ARGUMENT_KEY_IMAGEDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_IMAGEURI)) {
                 String imageUri = call.argument(ARGUMENT_KEY_IMAGEURI);
+                imageUri = getFileUri(activity, new File(imageUri));
                 object.imagePath = Uri.parse(imageUri).getPath();
             }
             message.mediaObject = object;
@@ -418,6 +421,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.fileData = call.argument(ARGUMENT_KEY_FILEDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_FILEURI)) {
                 String fileUri = call.argument(ARGUMENT_KEY_FILEURI);
+                fileUri = getFileUri(activity, new File(fileUri));
                 object.filePath = Uri.parse(fileUri).getPath();
             }
 //            String fileExtension = call.argument(ARGUMENT_KEY_FILEEXTENSION);
@@ -428,6 +432,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.emojiData = call.argument(ARGUMENT_KEY_EMOJIDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_EMOJIURI)) {
                 String emojiUri = call.argument(ARGUMENT_KEY_EMOJIURI);
+                emojiUri = getFileUri(activity, new File(emojiUri));
                 object.emojiPath = Uri.parse(emojiUri).getPath();
             }
             message.mediaObject = object;
@@ -512,5 +517,18 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         }
         qrauth.removeAllListeners();
         return false;
+    }
+
+    public String getFileUri(Context context, File file) {
+        if (file == null || !file.exists()) {
+            return null;
+        }
+        // 要与`AndroidManifest.xml`里配置的`authorities`一致，假设你的应用包名为com.example.app
+        Uri contentUri = FileProvider.getUriForFile(context,context.getApplicationInfo().packageName+".content.WechatKitFileProvider",file);
+        // 授权给微信访问路径
+        // 这里填微信包名
+        context.grantUriPermission("com.tencent.mm",contentUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        //分享
+        return contentUri.toString();   // contentUri.toString() 即是以"content://"开头的用于共享的路径
     }
 }
