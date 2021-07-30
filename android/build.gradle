@@ -48,6 +48,14 @@ android {
             consumerProguardFiles 'consumer-vendor-rules.pro'
         }
     }
+
+    allprojects {
+        repositories {
+            jcenter()
+            // 原有 jCenter 引用可继续保留
+            mavenCentral()
+        }
+    }
 }
 
 dependencies {

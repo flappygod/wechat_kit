@@ -411,7 +411,8 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.imageData = call.argument(ARGUMENT_KEY_IMAGEDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_IMAGEURI)) {
                 String imageUri = call.argument(ARGUMENT_KEY_IMAGEURI);
-                object.imagePath = getFileUri(activity, new File(imageUri));
+                object.imagePath = Uri.parse(imageUri).getPath();
+                //getFileUri(activity, new File(imageUri));
             }
             message.mediaObject = object;
         } else if (METHOD_SHAREFILE.equals(call.method)) {
@@ -420,7 +421,8 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.fileData = call.argument(ARGUMENT_KEY_FILEDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_FILEURI)) {
                 String fileUri = call.argument(ARGUMENT_KEY_FILEURI);
-                object.filePath = getFileUri(activity, new File(fileUri));
+                object.filePath = Uri.parse(fileUri).getPath();
+                //getFileUri(activity, new File(fileUri));
             }
 //            String fileExtension = call.argument(ARGUMENT_KEY_FILEEXTENSION);
             message.mediaObject = object;
@@ -430,7 +432,8 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.emojiData = call.argument(ARGUMENT_KEY_EMOJIDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_EMOJIURI)) {
                 String emojiUri = call.argument(ARGUMENT_KEY_EMOJIURI);
-                object.emojiPath = getFileUri(activity, new File(emojiUri));
+                object.emojiPath = Uri.parse(emojiUri).getPath();
+                //getFileUri(activity, new File(emojiUri));
             }
             message.mediaObject = object;
         } else if (METHOD_SHAREMUSIC.equals(call.method)) {
