@@ -531,7 +531,6 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
     public boolean checkVersionValid(Context context) {
         return iwxapi.getWXAppSupportAPI() >= 0x27000D00;
     }
-​
 
     // 判断Android版本是否7.0及以上
     public boolean checkAndroidNotBelowN() {
