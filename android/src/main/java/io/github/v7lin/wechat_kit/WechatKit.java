@@ -412,7 +412,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
             } else if (call.hasArgument(ARGUMENT_KEY_IMAGEURI)) {
                 String imageUri = call.argument(ARGUMENT_KEY_IMAGEURI);
                 if (checkVersionValid(activity) && checkAndroidNotBelowN()) {
-                    object.imagePath = getFileUri(activity, new File(imageUri));
+                    object.imagePath = getFileUri(activity, new File(Uri.parse(imageUri).getPath()));
                 } else {
                     object.imagePath = Uri.parse(imageUri).getPath();
                 }
@@ -425,7 +425,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
             } else if (call.hasArgument(ARGUMENT_KEY_FILEURI)) {
                 String fileUri = call.argument(ARGUMENT_KEY_FILEURI);
                 if (checkVersionValid(activity) && checkAndroidNotBelowN()) {
-                    object.filePath = getFileUri(activity, new File(fileUri));
+                    object.filePath = getFileUri(activity, new File(Uri.parse(fileUri).getPath()));
                 } else {
                     object.filePath = Uri.parse(fileUri).getPath();
                 }
@@ -438,7 +438,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
             } else if (call.hasArgument(ARGUMENT_KEY_EMOJIURI)) {
                 String emojiUri = call.argument(ARGUMENT_KEY_EMOJIURI);
                 if (checkVersionValid(activity) && checkAndroidNotBelowN()) {
-                    object.emojiPath = getFileUri(activity, new File(emojiUri));
+                    object.emojiPath = getFileUri(activity, new File(Uri.parse(emojiUri).getPath()));
                 } else {
                     object.emojiPath = Uri.parse(emojiUri).getPath();
                 }
