@@ -411,8 +411,11 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.imageData = call.argument(ARGUMENT_KEY_IMAGEDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_IMAGEURI)) {
                 String imageUri = call.argument(ARGUMENT_KEY_IMAGEURI);
-                object.imagePath = Uri.parse(imageUri).getPath();
-                //getFileUri(activity, new File(imageUri));
+                if (checkVersionValid(activity) && checkAndroidNotBelowN()) {
+                    object.imagePath = getFileUri(activity, new File(imageUri));
+                } else {
+                    object.imagePath = Uri.parse(imageUri).getPath();
+                }
             }
             message.mediaObject = object;
         } else if (METHOD_SHAREFILE.equals(call.method)) {
@@ -421,10 +424,12 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.fileData = call.argument(ARGUMENT_KEY_FILEDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_FILEURI)) {
                 String fileUri = call.argument(ARGUMENT_KEY_FILEURI);
-                object.filePath = Uri.parse(fileUri).getPath();
-                //getFileUri(activity, new File(fileUri));
+                if (checkVersionValid(activity) && checkAndroidNotBelowN()) {
+                    object.filePath = getFileUri(activity, new File(fileUri));
+                } else {
+                    object.filePath = Uri.parse(fileUri).getPath();
+                }
             }
-//            String fileExtension = call.argument(ARGUMENT_KEY_FILEEXTENSION);
             message.mediaObject = object;
         } else if (METHOD_SHAREEMOJI.equals(call.method)) {
             WXEmojiObject object = new WXEmojiObject();
@@ -432,8 +437,11 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.emojiData = call.argument(ARGUMENT_KEY_EMOJIDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_EMOJIURI)) {
                 String emojiUri = call.argument(ARGUMENT_KEY_EMOJIURI);
-                object.emojiPath = Uri.parse(emojiUri).getPath();
-                //getFileUri(activity, new File(emojiUri));
+                if (checkVersionValid(activity) && checkAndroidNotBelowN()) {
+                    object.emojiPath = getFileUri(activity, new File(emojiUri));
+                } else {
+                    object.emojiPath = Uri.parse(emojiUri).getPath();
+                }
             }
             message.mediaObject = object;
         } else if (METHOD_SHAREMUSIC.equals(call.method)) {
@@ -517,6 +525,17 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         }
         qrauth.removeAllListeners();
         return false;
+    }
+
+    // 判断微信版本是否为7.0.13及以上
+    public boolean checkVersionValid(Context context) {
+        return iwxapi.getWXAppSupportAPI() >= 0x27000D00;
+    }
+​
+
+    // 判断Android版本是否7.0及以上
+    public boolean checkAndroidNotBelowN() {
+        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N;
     }
 
     public String getFileUri(Context context, File file) {
