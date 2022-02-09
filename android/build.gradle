@@ -23,7 +23,7 @@ apply plugin: 'com.android.library'
 apply from: './quality.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 31
 
     resourcePrefix 'wechat_kit'
 
